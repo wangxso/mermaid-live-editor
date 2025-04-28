@@ -1,0 +1,24 @@
+name = "mermaid-live-editor"
+main = ".svelte-kit/cloudflare/_worker.js"
+compatibility_date = "2025-04-28"                    
+workers_dev = true                           
+[assets]
+binding   = "ASSETS"                                
+directory = ".svelte-kit/cloudflare"               
+
+[build]
+command = "pnpm build"
+
+[vars]
+MERMAID_DOMAIN = "mermaid.wangxso.com"
+MERMAID_ANALYTICS_URL = "https://p.mermaid.live"
+MERMAID_RENDERER_URL = "https://mermaid.ink"
+MERMAID_KROKI_RENDERER_URL = "https://kroki.io"
+MERMAID_IS_ENABLED_MERMAID_CHART_LINKS = "true"
+
+# wrangler.toml (wrangler v3.88.0^)
+[observability.logs]
+enabled = true
+
+
+
