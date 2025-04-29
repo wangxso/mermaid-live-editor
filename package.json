@@ -105,6 +105,7 @@
     "pako": "2.1.0",
     "plausible-tracker": "^0.3.9",
     "random-word-slugs": "0.1.7",
+    "svelte-local-storage-store": "^0.6.4",
     "svg-pan-zoom": "3.6.2",
     "svg2roughjs": "^3.2.1",
     "uuid": "9.0.1"
@@ -126,7 +127,9 @@
       "svelte-preprocess"
     ],
     "ignoredBuiltDependencies": [
-      "vue-demi"
+      "sharp",
+      "vue-demi",
+      "workerd"
     ]
   }
 }

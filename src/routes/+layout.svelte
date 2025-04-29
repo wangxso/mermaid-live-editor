@@ -7,12 +7,15 @@
   import { mode, ModeWatcher } from 'mode-watcher';
   import { onMount, type Snippet } from 'svelte';
   import '../app.postcss';
+  import { type Lang } from '$lib/i18n';
+  import { persisted } from 'svelte-local-storage-store';
 
   interface Props {
     children: Snippet;
   }
 
   let { children }: Props = $props();
+  export const lang = persisted<Lang>('lang', 'zh-CN');
 
   // This can be removed once https://github.com/sveltejs/kit/issues/1612 is fixed.
   // Then move it into src and vite will bundle it automatically.
@@ -35,6 +38,7 @@
   });
 
   $effect(() => {
+    document.documentElement.lang = $lang;
     toggleDarkTheme($mode === 'dark');
   });
 </script>

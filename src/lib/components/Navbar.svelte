@@ -10,6 +10,7 @@
 <script lang="ts">
   import MainMenu from '$/components/MainMenu.svelte';
   import McWrapper from '$/components/McWrapper.svelte';
+  import LanguageSwitcher from '$/components/LanguageSwitcher.svelte';
   import { Button } from '$/components/ui/button';
   import { Separator } from '$/components/ui/separator';
   import { Switch } from '$/components/ui/switch';
@@ -20,7 +21,8 @@
   import CloseIcon from '~icons/material-symbols/close-rounded';
   import GithubIcon from '~icons/mdi/github';
   import DropdownNavMenu from './DropdownNavMenu.svelte';
-
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
   interface Props {
     mobileToggle?: Snippet;
     children: Snippet;
@@ -33,6 +35,7 @@
   type Links = ComponentProps<typeof DropdownNavMenu>['links'];
 
   const githubLinks: Links = [
+    { title: 'Mermaid Live Editor i18n', href: 'https://github.com/wangxso/mermaid-live-editor' },
     { title: 'Mermaid JS', href: 'https://github.com/mermaid-js/mermaid' },
     {
       title: 'Mermaid Live Editor',
@@ -54,6 +57,9 @@
       promotion: activePromotion.id
     });
   };
+
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
 </script>
 
 {#if activePromotion}
@@ -93,7 +99,8 @@
         {#if !isReferral && !mobileToggle}
           Mermaid
         {/if}
-        Live Editor
+        {$t.title}
+        <!-- Now using the derived store -->
       </a>
 
       <McWrapper labelPrefix="Opens the current diagram in">
@@ -130,7 +137,7 @@
     id="menu"
     class="hidden flex-nowrap items-center justify-between gap-3 overflow-hidden md:flex">
     <DropdownNavMenu icon={GithubIcon} links={githubLinks} />
-    <Separator orientation="vertical" />
+    <LanguageSwitcher />
     {@render children()}
   </div>
   {@render mobileToggle?.()}

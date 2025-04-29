@@ -18,7 +18,11 @@
   import DownloadIcon from '~icons/material-symbols/download';
   import ExternalLinkIcon from '~icons/material-symbols/open-in-new-rounded';
   import WidthIcon from '~icons/material-symbols/width-rounded';
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
 
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
   const FONT_AWESOME_URL = `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/${FAVersion}/css/all.min.css`;
 
   type Exporter = (context: CanvasRenderingContext2D, image: HTMLImageElement) => () => void;
@@ -212,14 +216,14 @@ ${svgString}`);
   </div>
 {/snippet}
 
-<Card title="Actions" isStackable icon={{ component: DownloadIcon, class: 'rotate-180' }}>
+<Card title={$t.actions} isStackable icon={{ component: DownloadIcon, class: 'rotate-180' }}>
   <div class="flex min-w-fit flex-col gap-2 p-2">
     <div class="flex w-full items-center gap-2 whitespace-nowrap py-2">
       PNG size
       <ToggleGroup.Root type="single" variant="outline" bind:value={imageSizeMode}>
-        <ToggleGroup.Item value="auto">Auto</ToggleGroup.Item>
-        <ToggleGroup.Item value="width">Width</ToggleGroup.Item>
-        <ToggleGroup.Item value="height">Height</ToggleGroup.Item>
+        <ToggleGroup.Item value="auto">{$t.auto}</ToggleGroup.Item>
+        <ToggleGroup.Item value="width">{$t.width}</ToggleGroup.Item>
+        <ToggleGroup.Item value="height">{$t.height}</ToggleGroup.Item>
       </ToggleGroup.Root>
       {#if imageSizeMode !== 'auto'}
         <WidthIcon
@@ -245,15 +249,15 @@ ${svgString}`);
     </div>
     <Separator />
     {#if isClipboardAvailable()}
-      <CopyButton onclick={onCopyClipboard} label="Copy Image" />
+      <CopyButton onclick={onCopyClipboard} label={$t.copyImage} />
     {/if}
     {#if $urlsStore.mdCode}
-      <CopyInput value={$urlsStore.mdCode} label="Copy Markdown" testID={TID.copyMarkdown} />
+      <CopyInput value={$urlsStore.mdCode} label="{$t.copy} Markdown" testID={TID.copyMarkdown} />
     {/if}
 
     <div class="flex w-full items-center gap-2">
-      <Input type="url" bind:value={gistURL} placeholder="Enter Gist URL" />
-      <Button onclick={loadGist}>Load Gist</Button>
+      <Input type="url" bind:value={gistURL} placeholder={$t.enterGistUrl} />
+      <Button onclick={loadGist}>{$t.loadGist}</Button>
     </div>
     {#if isNetlify}
       <div class="flex w-full items-center justify-center">

@@ -4,7 +4,10 @@
   import { updateCode } from '$lib/util/state';
   import { logEvent } from '$lib/util/stats';
   import ShapesIcon from '~icons/material-symbols/account-tree-outline-rounded';
-
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
   const samples = {
     Block: `block-beta
     columns 3
@@ -220,14 +223,18 @@ packet-beta
   ];
 </script>
 
-<Card title="Sample Diagrams" isOpen isStackable icon={{ component: ShapesIcon }}>
+<Card title={$t.sampleDiagrams} isOpen isStackable icon={{ component: ShapesIcon }}>
   <div class="flex h-fit max-h-52 flex-wrap gap-2 overflow-y-auto p-2">
     {#each diagramOrder as sample}
       <Button
         size="sm"
         class="w-fit min-w-20 flex-grow normal-case"
         onclick={() => loadSampleDiagram(sample)}>
-        {sample}
+        {#if $t[sample]}
+          {$t[sample]}
+        {:else}
+          {sample}
+        {/if}
       </Button>
     {/each}
   </div>

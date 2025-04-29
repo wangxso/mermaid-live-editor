@@ -8,7 +8,6 @@
   import { env } from '$/util/env';
   import { stateStore, updateCode, updateConfig, urlsStore } from '$lib/util/state';
   import ExclamationCircleIcon from '~icons/material-symbols/error-outline-rounded';
-
   let { isMobile }: { isMobile: boolean } = $props();
   const onUpdate = (text: string) => {
     if ($stateStore.editorMode === 'code') {

@@ -7,27 +7,33 @@
   import ShareIcon from '~icons/material-symbols/share';
   import CopyInput from './CopyInput.svelte';
   import MermaidChartIcon from './MermaidChartIcon.svelte';
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
+
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
 </script>
 
 <Dialog.Root>
-  <Dialog.Trigger class={buttonVariants({ size: 'sm' })}>Share</Dialog.Trigger>
+  <Dialog.Trigger class={buttonVariants({ size: 'sm' })}>{$t.share}</Dialog.Trigger>
   <Dialog.Content>
     <Dialog.Header>
       <Dialog.Title class="flex items-center gap-2 text-xl">
-        <ShareIcon class="size-5" /> Shareable links
+        <ShareIcon class="size-5" />
+        {$t.shareLink}
       </Dialog.Title>
-      <Dialog.Description>Share your diagrams with others.</Dialog.Description>
+      <Dialog.Description>{$t.shareDesc}</Dialog.Description>
     </Dialog.Header>
 
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <h2 class="flex items-center gap-2">
           <img class="size-5" src="/favicon.svg" alt="Mermaid Live Editor" />
-          Mermaid Live Editor
+          Mermaid {$t.title}
         </h2>
         <CopyInput value={window.location.href} />
         <Dialog.Description>
-          The content of the diagrams you create never leaves your browser.
+          {$t.shareTip}
         </Dialog.Description>
       </div>
       {#if env.isEnabledMermaidChartLinks}

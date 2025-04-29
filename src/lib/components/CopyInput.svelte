@@ -3,10 +3,14 @@
   import { Input } from '$/components/ui/input';
   import type { InputType } from '$/types';
   import { copyToClipboard } from '$/util/util';
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
 
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
   let {
     value,
-    label = 'Copy',
+    label = $t.copy,
     type = 'url',
     testID
   }: { value: string; label?: string; type?: InputType; testID?: string } = $props();

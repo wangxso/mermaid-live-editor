@@ -27,7 +27,10 @@
     loaderHistoryStore,
     restoreHistory
   } from './history';
-
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
   dayjs.extend(dayjsRelativeTime);
 
   const HISTORY_SAVE_INTERVAL = 60_000;
@@ -203,9 +206,9 @@
       {/each}
     {:else}
       <div class="m-2 text-center">
-        No items in History<br />
-        Click the Save button to save current state and restore it later.<br />
-        Timeline will automatically be saved every minute.
+        {$t.noHistory} <br />
+        {$t.historyTip1} <br />
+        {$t.historyTip2}
       </div>
     {/if}
   </ul>

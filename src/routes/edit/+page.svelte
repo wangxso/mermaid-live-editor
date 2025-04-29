@@ -26,7 +26,10 @@
   import CodeIcon from '~icons/custom/code';
   import HistoryIcon from '~icons/material-symbols/history';
   import GearIcon from '~icons/material-symbols/settings-outline-rounded';
-
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
   const panZoomState = new PanZoomState();
 
   const tabSelectHandler = (tab: Tab) => {
@@ -38,12 +41,12 @@
     {
       icon: CodeIcon,
       id: 'code',
-      title: 'Code'
+      title: $t.code
     },
     {
       icon: GearIcon,
       id: 'config',
-      title: 'Config'
+      title: $t.config
     }
   ];
 

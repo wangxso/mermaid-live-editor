@@ -5,7 +5,10 @@
   import { standardizeDiagramType } from '$/util/mermaid';
   import { stateStore } from '$/util/state';
   import BookIcon from '~icons/material-symbols/book-2-outline-rounded';
-
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
   const docURLBase = 'https://mermaid.js.org';
   const docMap = {
     architecture: {
@@ -105,5 +108,5 @@
   target="_blank"
   title="View documentation for {doc.key.replace('Diagram', '')} diagram">
   <BookIcon />
-  Docs
+  {$t.docs}
 </Button>

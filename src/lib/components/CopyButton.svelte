@@ -5,10 +5,13 @@
   import { scale } from 'svelte/transition';
   import CheckIcon from '~icons/material-symbols/check-rounded';
   import CopyIcon from '~icons/material-symbols/content-copy-outline-rounded';
-
+  import { derived } from 'svelte/store';
+  import { translations, lang } from '$lib/i18n';
+  // Create derived translation store
+  const t = derived(lang, ($lang) => translations[$lang]);
   let {
     onclick,
-    label = 'Copy'
+    label = $t.copy
   }: { onclick: (event?: Event) => Promise<unknown>; label?: string; type?: InputType } = $props();
 
   let showCheckIcon = $state(false);
